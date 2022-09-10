@@ -1,6 +1,8 @@
 package lesson7;
 
 import com.google.common.collect.HashBiMap;
+import lesson7.task2.Gender;
+import lesson7.task2.People;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,20 +17,12 @@ public class Lesson7 {
 
         //        Условие: дана коллекция строк Arrays.asList(«a1», «a2», «a3», «a1»), давайте посмотрим как её можно
 //        обрабатывать используя методы filter, findFirst, findAny, skip и count:
-
-
 //        Вернуть количество вхождений объекта «a1»
-
 //        Вернуть первый элемент коллекции или 0, если коллекция пуста
-
 //        Вернуть последний элемент коллекции или «empty», если коллекция пуста
-
 //        Найти элемент в коллекции равный «a3» или кинуть ошибку
-
 //        Вернуть третий элемент коллекции по порядку
-
 //        Вернуть два элемента начиная со второго
-
 //        Выбрать все элементы содержащие "1" и поместить их в List
 
         List<String> strings = Arrays.asList("a1", "a2", "a3", "a1");
@@ -45,14 +39,19 @@ public class Lesson7 {
 //        Условие: дана коллекция класс People (с полями name — имя,  age — возраст, sex — пол), вида Arrays.asList(
 //        new People(«Вася», 16, Sex.MAN), new People(«Петя», 23, Sex.MAN), new People(«Елена», 42, Sex.WOMEN), new
 //        People(«Иван Иванович», 69, Sex.MAN)). Давайте посмотрим примеры как работать с таким классом:
-
-
 //        Выбрать мужчин-военнообязанных (от 18 до 27 лет)
-
 //        Найти средний возраст среди мужчин
-
 //        Найти кол-во потенциально работоспособных людей в выборке (т.е. от 18 лет и учитывая что женщины выходят в
 //        55 лет, а мужчина в 60)
+
+        List<People> people = Arrays.asList(new People("Вася", 16, Gender.MAN),
+                                            new People("Петя", 23, Gender.MAN),
+                                            new People("Елена", 42, Gender.WOMAN),
+                                            new People("Анна", 24, Gender.WOMAN),
+                                            new People("Иван Иванович", 69, Gender.MAN));
+        people.stream()
+              .filter(e -> e.getAge() > 18 && e.getAge() < 27 && e.getSex() == Gender.MAN)
+              .forEach(System.out::println);
 
 //            -------------------------------------------------------------------------------------------------------
 //        Рассмотрим результаты работы над коллекцией Collection ordered = Arrays.asList(«a1», «a2», «a2», «a3»,
