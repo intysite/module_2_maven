@@ -55,11 +55,11 @@ public class Lesson7 {
         people.stream()
                 .filter(e -> e.getAge() > 18 && e.getAge() < 27 && e.getSex() == Gender.MAN)
                 .forEach(System.out::println);
-        OptionalDouble rezult = people.stream()
+        int rezult = (int) people.stream()
                 .filter(e -> e.getSex() == Gender.MAN)
                 .map(People::getAge)
                 .flatMapToInt(IntStream::of)
-                .average();
+                .average().orElse(0);
         System.out.println(rezult);
         System.out.println(people.stream()
                 .filter(e -> (e.getAge() < 60 && e.getSex() == Gender.MAN) || (e.getAge() < 55 && e.getSex() == Gender.WOMAN))
@@ -82,13 +82,9 @@ public class Lesson7 {
 
 //        Условие: дана коллекция строк Arrays.asList(«a1», «a2», «a3», «a1»), давайте посмотрим, как её можно
 //        обрабатывать используя Match функции
-
 //        Найти существуют ли хоть один «a1» элемент в коллекции
-
 //        Найти существуют ли хоть один «a8» элемент в коллекции
-
 //        Найти есть ли символ «1» у всех элементов коллекции
-
 //        Проверить что не существуют ни одного «a7» элемента в коллекции
 
         System.out.println(strings.stream().anyMatch(e -> e.equals("a1")));
@@ -97,18 +93,27 @@ public class Lesson7 {
         System.out.println(strings.stream().noneMatch(e -> e.equals("a7")));
 
 //            -------------------------------------------------------------------------------------------------------
-
 //        Условие: даны две коллекции collection1 = Arrays.asList(«a1», «a2», «a3», «a1») и collection2 = Arrays
 //        .asList(«1,2,0», «4,5»), давайте посмотрим как её можно обрабатывать используя различные map функции
-
 //        Добавить "_1" к каждому элементу первой коллекции
-
 //        В первой коллекции убрать первый символ и вернуть массив чисел (int[])
-
 //        Из второй коллекции получить все числа, перечисленные через запятую из всех элементов
-
 //        Из второй коллекции получить сумму всех чисел, перечисленных через запятую
 
+        List<String> list1 = Arrays.asList("a1", "a2", "a3", "a1");
+        List<String> list2 = Arrays.asList("1,2,0", "4,5");
+        list1.stream().map(e -> e + "_1").forEach(System.out::println);
+        List<Integer> list3 = list1.stream()
+                                     .map(e -> e.substring(1))
+                                     .map(Integer::parseInt)
+                                     .collect(Collectors.toList());
+        System.out.println(list3);
+        List<Integer> list4 = list2.stream()
+                                    .map(e -> List.of(e.split(",")))
+                                    .flatMap(e -> e.stream().map(Integer::parseInt))
+                                    .collect(Collectors.toList());
+        System.out.println(list4);
+        System.out.println(list4.stream().reduce(Integer::sum).orElse(0));
 //            -------------------------------------------------------------------------------------------------------
 
 //        Условие: даны две коллекции коллекция строк Arrays.asList(«a1», «a4», «a3», «a2», «a1», «a4») и коллекция
