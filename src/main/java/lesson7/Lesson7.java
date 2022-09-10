@@ -5,6 +5,7 @@ import lesson7.task2.Gender;
 import lesson7.task2.People;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.OptionalDouble;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public class Lesson7 {
                 .forEach(System.out::println);
         OptionalDouble rezult = people.stream()
                 .filter(e -> e.getSex() == Gender.MAN)
-                .map(e -> e.getAge())
+                .map(People::getAge)
                 .flatMapToInt(IntStream::of)
                 .average();
         System.out.println(rezult);
@@ -68,16 +69,19 @@ public class Lesson7 {
 //        Рассмотрим результаты работы над коллекцией Collection ordered = Arrays.asList(«a1», «a2», «a2», «a3»,
 //        «a1», «a2», «a2») и Collection nonOrdered = new HashSet<>(ordered).
 
-
 //        Получение коллекции без дубликатов из неупорядоченного стрима
 
 //        Получение коллекции без дубликатов из упорядоченного стрима
+
+        List<String> ordered = Arrays.asList("a1", "a2", "a2", "a3", "a1", "a2", "a2");
+        HashSet<String> strings1 = new HashSet<>(ordered);
+        System.out.println(strings1);
+
 //            -------------------------------------------------------------------------------------------------------
 
 
 //        Условие: дана коллекция строк Arrays.asList(«a1», «a2», «a3», «a1»), давайте посмотрим, как её можно
 //        обрабатывать используя Match функции
-
 
 //        Найти существуют ли хоть один «a1» элемент в коллекции
 
@@ -86,6 +90,12 @@ public class Lesson7 {
 //        Найти есть ли символ «1» у всех элементов коллекции
 
 //        Проверить что не существуют ни одного «a7» элемента в коллекции
+
+        System.out.println(strings.stream().anyMatch(e -> e.equals("a1")));
+        System.out.println(strings.stream().anyMatch(e -> e.equals("a8")));
+        System.out.println(strings.stream().allMatch(e -> e.contains("1")));
+        System.out.println(strings.stream().noneMatch(e -> e.equals("a7")));
+
 //            -------------------------------------------------------------------------------------------------------
 
 //        Условие: даны две коллекции collection1 = Arrays.asList(«a1», «a2», «a3», «a1») и collection2 = Arrays
