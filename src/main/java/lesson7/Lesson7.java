@@ -6,7 +6,9 @@ import lesson7.task2.People;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Lesson7 {
     public static void main(String[] args) {
@@ -50,8 +52,17 @@ public class Lesson7 {
                                             new People("Анна", 24, Gender.WOMAN),
                                             new People("Иван Иванович", 69, Gender.MAN));
         people.stream()
-              .filter(e -> e.getAge() > 18 && e.getAge() < 27 && e.getSex() == Gender.MAN)
-              .forEach(System.out::println);
+                .filter(e -> e.getAge() > 18 && e.getAge() < 27 && e.getSex() == Gender.MAN)
+                .forEach(System.out::println);
+        OptionalDouble rezult = people.stream()
+                .filter(e -> e.getSex() == Gender.MAN)
+                .map(e -> e.getAge())
+                .flatMapToInt(IntStream::of)
+                .average();
+        System.out.println(rezult);
+        System.out.println(people.stream()
+                .filter(e -> (e.getAge() < 60 && e.getSex() == Gender.MAN) || (e.getAge() < 55 && e.getSex() == Gender.WOMAN))
+                .count());
 
 //            -------------------------------------------------------------------------------------------------------
 //        Рассмотрим результаты работы над коллекцией Collection ordered = Arrays.asList(«a1», «a2», «a2», «a3»,
